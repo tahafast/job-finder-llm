@@ -1,0 +1,3 @@
+"""
+Job Finder API models
+""" 
