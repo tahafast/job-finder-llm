@@ -98,7 +98,7 @@ class LinkedInScraper:
             chrome_options.add_argument(f"user-agent={random.choice(user_agents)}")
             
             # Set Chrome binary location for Render
-            chrome_options.binary_location = "/usr/bin/google-chrome"
+            chrome_options.binary_location = "/usr/bin/google-chrome-stable"
             
             service = Service(ChromeDriverManager().install())
             self.driver = webdriver.Chrome(service=service, options=chrome_options)
