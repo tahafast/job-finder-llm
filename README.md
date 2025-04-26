@@ -15,7 +15,7 @@ A FastAPI-based job search API that scrapes job listings from LinkedIn, uses an 
 - Python 3.8+
 - Chrome browser installed
 - GroqCloud API key
-- Accounts for LinkedIn, Indeed, and Glassdoor (for scraping)
+- LinkedIn account (for scraping)
 
 ## Installation
 
@@ -36,13 +36,24 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Create a `.env` file in the root directory with your credentials:
-```
-GROQ_API_KEY=your_openai_api_key_here
-LINKEDIN_EMAIL=your_linkedin_email
-LINKEDIN_PASSWORD=your_linkedin_password
-DEBUG_MODE=true
-```
+4. **Important: Environment Setup**
+   Create a `.env` file in the root directory with your credentials. This file is required for the application to work properly:
+
+   ```env
+   # Required API Keys and Credentials
+   GROQ_API_KEY=your_groq_api_key_here
+   LINKEDIN_EMAIL=your_linkedin_email
+   LINKEDIN_PASSWORD=your_linkedin_password
+   
+   # Optional Settings
+   DEBUG_MODE=true
+   ```
+
+   **Note:** 
+   - The `.env` file is included in `.gitignore` to protect your credentials
+   - Never commit your `.env` file to version control
+   - You can get a Groq API key by signing up at [GroqCloud](https://console.groq.com/)
+   - Use your LinkedIn account credentials for scraping
 
 ## Logging and Reload Issues
 
