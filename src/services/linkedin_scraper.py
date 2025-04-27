@@ -22,8 +22,11 @@ import logging
 from dotenv import load_dotenv
 import os
 
+# Load environment variables from the root directory
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), '.env')
+load_dotenv(dotenv_path)
+
 logger = logging.getLogger(__name__)
-load_dotenv()
 
 class LinkedInScraper:
     def __init__(self):
@@ -33,8 +36,14 @@ class LinkedInScraper:
         self.max_retries = 3
         self.min_delay = 3  # Increased minimum delay
         self.max_delay = 7  # Increased maximum delay
+        
+        # Load environment variables
         self.email = os.getenv("LINKEDIN_EMAIL")
         self.password = os.getenv("LINKEDIN_PASSWORD")
+        
+        if not self.email or not self.password:
+            raise ValueError("LINKEDIN_EMAIL and LINKEDIN_PASSWORD must be set in .env file")
+            
         self.debug_mode = os.getenv("DEBUG_MODE", "false").lower() == "true"
         
         # Define selectors for company and location
@@ -62,8 +71,6 @@ class LinkedInScraper:
             "[data-job-location]"
         ]
         
-        if not self.email or not self.password:
-            raise ValueError("LINKEDIN_EMAIL and LINKEDIN_PASSWORD must be set in environment variables")
         logger.info("LinkedIn scraper initialized")
 
     def _random_delay(self):
@@ -97,8 +104,7 @@ class LinkedInScraper:
             ]
             chrome_options.add_argument(f"user-agent={random.choice(user_agents)}")
             
-            # Set Chrome binary location for Render
-            chrome_options.binary_location = "/usr/bin/google-chrome-stable"
+            
             
             service = Service(ChromeDriverManager().install())
             self.driver = webdriver.Chrome(service=service, options=chrome_options)
